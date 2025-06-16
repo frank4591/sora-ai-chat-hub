@@ -4,9 +4,7 @@
 
 **URL**: [https://lovable.dev/projects/57923e05-9d4f-414c-a509-bb7914ad386b](https://yellow-flower-02d81a30f.6.azurestaticapps.net/)
 
-## How can I edit this code?
 
-There are several ways of editing your application.
 
 **Use Lovable**
 
