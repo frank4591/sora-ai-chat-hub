@@ -91,7 +91,7 @@ const Index = () => {
               },
               inScope: true,
               roleInformation:
-                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them",
+                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Give extra spacing and lines, use markdown format in response. Also provide links to external resources if available.",
             },
           },
         ],
