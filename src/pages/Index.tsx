@@ -91,7 +91,7 @@ const Index = () => {
               },
               inScope: true,
               roleInformation:
-                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Give extra spacing and lines, use markdown format in response. Also provide links to external resources if available.",
+                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Give extra spacing and lines,Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required.remove reference of documents.when giving final content response",
             },
           },
         ],
@@ -104,7 +104,6 @@ const Index = () => {
         stop: null,
       };
 
- 
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -113,8 +112,6 @@ const Index = () => {
         },
         body: JSON.stringify(requestBody),
       });
-
- 
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -125,7 +122,6 @@ const Index = () => {
       }
 
       const data = await response.json();
-
 
       const assistantContent =
         data.choices?.[0]?.message?.content ||
@@ -255,11 +251,13 @@ const Index = () => {
                               {message.content}
                             </Markdown>
                           </div>
-                          <p className={`text-xs mt-1 ${
-                            message.role === "user" 
-                              ? "text-indigo-100" 
-                              : "text-gray-500"
-                          }`}>
+                          <p
+                            className={`text-xs mt-1 ${
+                              message.role === "user"
+                                ? "text-indigo-100"
+                                : "text-gray-500"
+                            }`}
+                          >
                             {message.timestamp.toLocaleTimeString()}
                           </p>
                         </div>
