@@ -50,9 +50,9 @@ const Index = () => {
       const searchIndex = import.meta.env.VITE_SEARCH_INDEX;
 
       // Validate environment variables
-      if (!apiBase || !deploymentId || !apiKey || !searchKey || !searchEndpoint || !searchIndex) {
-        throw new Error('Missing required environment variables. Please check your Azure Static Web App configuration.');
-      }
+      // if (!apiBase || !deploymentId || !apiKey || !searchKey || !searchEndpoint || !searchIndex) {
+      //   throw new Error('Missing required environment variables. Please check your Azure Static Web App configuration.');
+      // }
 
       console.log('Environment variables loaded:', {
         apiBase: apiBase ? 'Set' : 'Missing',
