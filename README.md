@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to SoraChain Bot
 
 ## Project info
 
