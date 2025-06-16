@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -37,17 +36,32 @@ const Index = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputValue;
     setInputValue('');
     setIsLoading(true);
 
     try {
-      // Get environment variables (in production these would be set in Azure Web App)
-      const apiBase = process.env.VITE_API_BASE || 'https://your-azure-openai-endpoint.openai.azure.com';
-      const deploymentId = process.env.VITE_DEPLOYMENT_ID || 'your-deployment-id';
-      const apiKey = process.env.VITE_API_KEY_SORA || 'your-api-key';
-      const searchKey = process.env.VITE_SEARCH_KEY || 'your-search-key';
-      const searchEndpoint = process.env.VITE_SEARCH_ENDPOINT || 'https://notionaisearch.search.windows.net';
-      const searchIndex = process.env.VITE_SEARCH_INDEX || 'notionv1-index';
+      // Get environment variables with VITE_ prefix for frontend access
+      const apiBase = import.meta.env.VITE_API_BASE;
+      const deploymentId = import.meta.env.VITE_DEPLOYMENT_ID;
+      const apiKey = import.meta.env.VITE_API_KEY_SORA;
+      const searchKey = import.meta.env.VITE_SEARCH_KEY;
+      const searchEndpoint = import.meta.env.VITE_SEARCH_ENDPOINT;
+      const searchIndex = import.meta.env.VITE_SEARCH_INDEX;
+
+      // Validate environment variables
+      if (!apiBase || !deploymentId || !apiKey || !searchKey || !searchEndpoint || !searchIndex) {
+        throw new Error('Missing required environment variables. Please check your Azure Static Web App configuration.');
+      }
+
+      console.log('Environment variables loaded:', {
+        apiBase: apiBase ? 'Set' : 'Missing',
+        deploymentId: deploymentId ? 'Set' : 'Missing',
+        apiKey: apiKey ? 'Set' : 'Missing',
+        searchKey: searchKey ? 'Set' : 'Missing',
+        searchEndpoint: searchEndpoint ? 'Set' : 'Missing',
+        searchIndex: searchIndex ? 'Set' : 'Missing'
+      });
 
       const endpoint = `${apiBase}/openai/deployments/${deploymentId}/extensions/chat/completions?api-version=2023-08-01-preview`;
 
@@ -63,7 +77,7 @@ const Index = () => {
         })),
         {
           role: "user",
-          content: inputValue
+          content: currentInput
         }
       ];
 
@@ -95,6 +109,9 @@ const Index = () => {
         stop: null
       };
 
+      console.log('Making request to:', endpoint);
+      console.log('Request body:', JSON.stringify(requestBody, null, 2));
+
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -104,11 +121,18 @@ const Index = () => {
         body: JSON.stringify(requestBody)
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('API Error:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const data = await response.json();
+      console.log('API Response:', data);
+      
       const assistantContent = data.choices?.[0]?.message?.content || 'Sorry, I could not process your request.';
 
       const assistantMessage: Message = {
@@ -121,7 +145,7 @@ const Index = () => {
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
-      toast.error('Failed to send message. Please try again.');
+      toast.error(`Failed to send message: ${error.message}. Please check your configuration.`);
     } finally {
       setIsLoading(false);
     }
