@@ -157,21 +157,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Navigation Header */}
-      <nav className="bg-black/20 backdrop-blur-md border-b border-white/10">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <Bot className="h-8 w-8 text-purple-400" />
-              <h1 className="text-xl font-bold text-white">SoraChain Bot</h1>
+              <Bot className="h-8 w-8 text-indigo-600" />
+              <h1 className="text-xl font-bold text-gray-900">SoraChain Bot</h1>
             </div>
             <div className="flex items-center space-x-6">
               <a
                 href="https://sorachain.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-purple-300 transition-colors flex items-center space-x-1"
+                className="text-gray-700 hover:text-indigo-600 transition-colors flex items-center space-x-1"
               >
                 <span>Home</span>
                 <ExternalLink className="h-4 w-4" />
@@ -180,7 +180,7 @@ const Index = () => {
                 href="https://docs.sorachain.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-purple-300 transition-colors flex items-center space-x-1"
+                className="text-gray-700 hover:text-indigo-600 transition-colors flex items-center space-x-1"
               >
                 <span>Documentation</span>
                 <ExternalLink className="h-4 w-4" />
@@ -189,7 +189,7 @@ const Index = () => {
                 href="https://notion.sorachain.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-purple-300 transition-colors flex items-center space-x-1"
+                className="text-gray-700 hover:text-indigo-600 transition-colors flex items-center space-x-1"
               >
                 <span>Notion</span>
                 <ExternalLink className="h-4 w-4" />
@@ -202,87 +202,94 @@ const Index = () => {
       {/* Main Chat Interface */}
       <div className="max-w-4xl mx-auto p-4 h-[calc(100vh-4rem)] flex flex-col">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-white mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome to SoraChain AI Assistant
           </h2>
-          <p className="text-purple-300">
+          <p className="text-indigo-600">
             Ask me anything about the SoraChain AI platform
           </p>
         </div>
 
-        {/* Chat Messages */}
-        <Card className="flex-1 bg-black/40 backdrop-blur-md border-white/20 mb-4">
-          <ScrollArea className="h-full p-4" ref={scrollAreaRef}>
-            {messages.length === 0 && (
-              <div className="text-center text-gray-400 mt-8">
-                <Bot className="h-12 w-12 mx-auto mb-4 text-purple-400" />
-                <p>Start a conversation about SoraChain AI!</p>
-              </div>
-            )}
-            <div className="space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      message.role === "user"
-                        ? "bg-purple-600 text-white"
-                        : "bg-gray-700 text-white"
-                    }`}
-                  >
-                    <div className="flex items-start space-x-2">
-                      {message.role === "assistant" && (
-                        <Bot className="h-5 w-5 mt-0.5 text-purple-400 flex-shrink-0" />
-                      )}
-                      {message.role === "user" && (
-                        <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
-                      )}
-                      <div className="flex-1">
-                        <p className="whitespace-pre-wrap">
-                          <Markdown
-                            options={{
-                              inline: true,
-                              forceWrapper: true,
-                              tables: true,
-                              breaks: true,
-                            }}
-                          >{message.content}</Markdown></p>
-                        <p className="text-xs opacity-70 mt-1">
-                          
-                            {message.timestamp.toLocaleTimeString()}
-                          
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-gray-700 text-white rounded-lg p-3 max-w-[80%]">
-                    <div className="flex items-center space-x-2">
-                      <Bot className="h-5 w-5 text-purple-400" />
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                        <div
-                          className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.1s" }}
-                        ></div>
-                        <div
-                          className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                          style={{ animationDelay: "0.2s" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
+        {/* Chat Messages - Fixed height with proper scrolling */}
+        <Card className="flex-1 bg-white/70 backdrop-blur-md border-gray-200 mb-4 shadow-lg overflow-hidden">
+          <div className="h-full flex flex-col">
+            <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+              {messages.length === 0 && (
+                <div className="text-center text-gray-500 mt-8">
+                  <Bot className="h-12 w-12 mx-auto mb-4 text-indigo-500" />
+                  <p>Start a conversation about SoraChain AI!</p>
                 </div>
               )}
-            </div>
-          </ScrollArea>
+              <div className="space-y-4 min-h-0">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${
+                      message.role === "user" ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    <div
+                      className={`max-w-[80%] rounded-lg p-3 shadow-sm ${
+                        message.role === "user"
+                          ? "bg-indigo-600 text-white"
+                          : "bg-white text-gray-800 border border-gray-200"
+                      }`}
+                    >
+                      <div className="flex items-start space-x-2">
+                        {message.role === "assistant" && (
+                          <Bot className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
+                        )}
+                        {message.role === "user" && (
+                          <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <div className="whitespace-pre-wrap break-words">
+                            <Markdown
+                              options={{
+                                inline: true,
+                                forceWrapper: true,
+                                tables: true,
+                                breaks: true,
+                              }}
+                            >
+                              {message.content}
+                            </Markdown>
+                          </div>
+                          <p className={`text-xs mt-1 ${
+                            message.role === "user" 
+                              ? "text-indigo-100" 
+                              : "text-gray-500"
+                          }`}>
+                            {message.timestamp.toLocaleTimeString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[80%] shadow-sm">
+                      <div className="flex items-center space-x-2">
+                        <Bot className="h-5 w-5 text-indigo-600" />
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+                          <div
+                            className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
+                            style={{ animationDelay: "0.1s" }}
+                          ></div>
+                          <div
+                            className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
+                            style={{ animationDelay: "0.2s" }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+          </div>
         </Card>
 
         {/* Input Area */}
@@ -292,13 +299,13 @@ const Index = () => {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask about SoraChain AI..."
-            className="flex-1 bg-black/40 backdrop-blur-md border-white/20 text-white placeholder-gray-400"
+            className="flex-1 bg-white/70 backdrop-blur-md border-gray-300 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
             disabled={isLoading}
           />
           <Button
             onClick={sendMessage}
             disabled={!inputValue.trim() || isLoading}
-            className="bg-purple-600 hover:bg-purple-700 text-white"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-md"
           >
             <Send className="h-4 w-4" />
           </Button>
