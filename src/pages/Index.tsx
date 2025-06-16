@@ -54,14 +54,6 @@ const Index = () => {
       //   throw new Error('Missing required environment variables. Please check your Azure Static Web App configuration.');
       // }
 
-      console.log('Environment variables loaded:', {
-        apiBase: apiBase ? 'Set' : 'Missing',
-        deploymentId: deploymentId ? 'Set' : 'Missing',
-        apiKey: apiKey ? 'Set' : 'Missing',
-        searchKey: searchKey ? 'Set' : 'Missing',
-        searchEndpoint: searchEndpoint ? 'Set' : 'Missing',
-        searchIndex: searchIndex ? 'Set' : 'Missing'
-      });
 
       const endpoint = `${apiBase}/openai/deployments/${deploymentId}/extensions/chat/completions?api-version=2023-08-01-preview`;
 
