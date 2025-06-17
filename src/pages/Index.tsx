@@ -6,6 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import Markdown from "markdown-to-jsx";
+import AIResponseRenderer from "./AIResponseRenderer";
+import soraLogo from "@/asset/soraLogo1.png";
 
 interface Message {
   id: string;
@@ -159,8 +161,9 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <Bot className="h-8 w-8 text-indigo-600" />
-              <h1 className="text-xl font-bold text-gray-900">SoraChain Bot</h1>
+              {/* <Bot className="h-8 w-8 text-indigo-600" /> */}
+              <img src={soraLogo} className="h-5 w-5" />
+              <h1 className="text-xl font-bold text-gray-900">SoraChain AI Assistant</h1>
             </div>
             <div className="flex items-center space-x-6">
               <a
@@ -212,7 +215,8 @@ const Index = () => {
             <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
               {messages.length === 0 && (
                 <div className="text-center text-gray-500 mt-8">
-                  <Bot className="h-12 w-12 mx-auto mb-4 text-indigo-500" />
+                  {/* <Bot className="h-12 w-12 mx-auto mb-4 text-indigo-500" /> */}
+                  <img src={soraLogo} className="h-12 w-12 mx-auto mb-4" />
                   <p>Start a conversation about SoraChain AI!</p>
                 </div>
               )}
@@ -240,16 +244,7 @@ const Index = () => {
                         )}
                         <div className="flex-1 min-w-0">
                           <div className="whitespace-pre-wrap break-words">
-                            <Markdown
-                              options={{
-                                inline: true,
-                                forceWrapper: true,
-                                tables: true,
-                                breaks: true,
-                              }}
-                            >
-                              {message.content}
-                            </Markdown>
+                              <AIResponseRenderer aiResponse={message.content} />
                           </div>
                           <p
                             className={`text-xs mt-1 ${
