@@ -64,7 +64,7 @@ const Index = () => {
         {
           role: "system",
           content:
-            "You are an AI assistant that helps people find information about Sorachain Ai platform, Give them information related to Sorachain.Give proper spacing, extra padding and lines, use markdown format in response.Give extra spacing and lines,Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines ",
+            "You are an AI assistant that helps people find information about Sorachain Ai platform, Give them information related to Sorachain.Give proper spacing,  use markdown format in response.Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines ",
         },
         ...messages.slice(-10).map((msg) => ({
           // Last 10 messages for context
@@ -93,7 +93,7 @@ const Index = () => {
               },
               inScope: true,
               roleInformation:
-                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Give extra spacing and lines,Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required.remove reference of documents.when giving final content response",
+                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Use markdown format in response.Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines and remove reference of documents.when giving final content response",
             },
           },
         ],
@@ -163,7 +163,9 @@ const Index = () => {
             <div className="flex items-center space-x-2">
               {/* <Bot className="h-8 w-8 text-indigo-600" /> */}
               <img src={soraLogo} className="h-5 w-5" />
-              <h1 className="text-xl font-bold text-gray-900">SoraChain AI Assistant</h1>
+              <h1 className="text-xl font-bold text-gray-900">
+                SoraChain AI Assistant
+              </h1>
             </div>
             <div className="flex items-center space-x-6">
               <a
@@ -244,7 +246,7 @@ const Index = () => {
                         )}
                         <div className="flex-1 min-w-0">
                           <div className="whitespace-pre-wrap break-words">
-                              <AIResponseRenderer aiResponse={message.content} />
+                            <AIResponseRenderer aiResponse={message.content} />
                           </div>
                           <p
                             className={`text-xs mt-1 ${
