@@ -1,5 +1,6 @@
+
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, ExternalLink } from "lucide-react";
+import { Send, Bot, User, ExternalLink, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -16,10 +17,22 @@ interface Message {
   timestamp: Date;
 }
 
+const faqQuestions = [
+  "What is SoraChain AI trying to build?",
+  "What is the vision of SoraChain AI?",
+  "What are the Go To Market(GTM) Strategy of SoraChain AI?",
+  "What is the Revenue Model?",
+  "Why Sorachain AI Excels at what they are building?",
+  "Who are the core Competitors?",
+  "What is your Competitors Advantage?",
+  "What is the Difference between On device Training and SoraChain AI's Training?"
+];
+
 const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,19 +41,21 @@ const Index = () => {
     }
   }, [messages]);
 
-  const sendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+  const sendMessage = async (messageContent?: string) => {
+    const content = messageContent || inputValue;
+    if (!content.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: inputValue,
+      content: content,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    const currentInput = inputValue;
-    setInputValue("");
+    if (!messageContent) {
+      setInputValue("");
+    }
     setIsLoading(true);
 
     try {
@@ -51,11 +66,6 @@ const Index = () => {
       const searchKey = import.meta.env.VITE_SEARCH_KEY;
       const searchEndpoint = import.meta.env.VITE_SEARCH_ENDPOINT;
       const searchIndex = import.meta.env.VITE_SEARCH_INDEX;
-
-      // Validate environment variables
-      // if (!apiBase || !deploymentId || !apiKey || !searchKey || !searchEndpoint || !searchIndex) {
-      //   throw new Error('Missing required environment variables. Please check your Azure Static Web App configuration.');
-      // }
 
       const endpoint = `${apiBase}/openai/deployments/${deploymentId}/extensions/chat/completions?api-version=2023-08-01-preview`;
 
@@ -73,7 +83,7 @@ const Index = () => {
         })),
         {
           role: "user",
-          content: currentInput,
+          content: content,
         },
       ];
 
@@ -154,6 +164,11 @@ const Index = () => {
     }
   };
 
+  const handleFAQClick = (question: string) => {
+    setSidebarOpen(false);
+    sendMessage(question);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Navigation Header */}
@@ -161,7 +176,14 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              {/* <Bot className="h-8 w-8 text-indigo-600" /> */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
               <img src={soraLogo} className="h-5 w-5" />
               <h1 className="text-xl font-bold text-gray-900">
                 SoraChain AI Assistant
@@ -200,110 +222,154 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Main Chat Interface */}
-      <div className="max-w-4xl mx-auto p-4 h-[calc(100vh-4rem)] flex flex-col">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome to SoraChain AI Assistant
-          </h2>
-          <p className="text-indigo-600">
-            Ask me anything about the SoraChain AI platform
-          </p>
-        </div>
-
-        {/* Chat Messages - Fixed height with proper scrolling */}
-        <Card className="flex-1 bg-white/70 backdrop-blur-md border-gray-200 mb-4 shadow-lg overflow-hidden">
-          <div className="h-full flex flex-col">
-            <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-              {messages.length === 0 && (
-                <div className="text-center text-gray-500 mt-8">
-                  {/* <Bot className="h-12 w-12 mx-auto mb-4 text-indigo-500" /> */}
-                  <img src={soraLogo} className="h-12 w-12 mx-auto mb-4" />
-                  <p>Start a conversation about SoraChain AI!</p>
-                </div>
-              )}
-              <div className="space-y-4 min-h-0">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${
-                      message.role === "user" ? "justify-end" : "justify-start"
-                    }`}
+      <div className="flex h-[calc(100vh-4rem)]">
+        {/* FAQ Sidebar */}
+        <div className={`${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 fixed md:relative z-30 w-80 h-full transition-transform duration-300 ease-in-out`}>
+          <div className="h-full bg-white/90 backdrop-blur-md border-r border-gray-200 shadow-lg">
+            <div className="p-4 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900">Frequently Asked Questions</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setSidebarOpen(false)}
+                  className="md:hidden"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+            <ScrollArea className="h-[calc(100%-5rem)] p-4">
+              <div className="space-y-2">
+                {faqQuestions.map((question, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleFAQClick(question)}
+                    className="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-indigo-50 hover:border-indigo-200 border border-transparent transition-colors duration-200 text-sm text-gray-700 hover:text-indigo-700"
                   >
-                    <div
-                      className={`max-w-[80%] rounded-lg p-3 shadow-sm ${
-                        message.role === "user"
-                          ? "bg-indigo-600 text-white"
-                          : "bg-white text-gray-800 border border-gray-200"
-                      }`}
-                    >
-                      <div className="flex items-start space-x-2">
-                        {message.role === "assistant" && (
-                          <Bot className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
-                        )}
-                        {message.role === "user" && (
-                          <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <div className="whitespace-pre-wrap break-words">
-                            <AIResponseRenderer aiResponse={message.content} />
-                          </div>
-                          <p
-                            className={`text-xs mt-1 ${
-                              message.role === "user"
-                                ? "text-indigo-100"
-                                : "text-gray-500"
-                            }`}
-                          >
-                            {message.timestamp.toLocaleTimeString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    {question}
+                  </button>
                 ))}
-                {isLoading && (
-                  <div className="flex justify-start">
-                    <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[80%] shadow-sm">
-                      <div className="flex items-center space-x-2">
-                        <Bot className="h-5 w-5 text-indigo-600" />
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
-                          <div
-                            className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.1s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             </ScrollArea>
           </div>
-        </Card>
+        </div>
 
-        {/* Input Area */}
-        <div className="flex space-x-2">
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask about SoraChain AI..."
-            className="flex-1 bg-white/70 backdrop-blur-md border-gray-300 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
-            disabled={isLoading}
+        {/* Overlay for mobile */}
+        {sidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden"
+            onClick={() => setSidebarOpen(false)}
           />
-          <Button
-            onClick={sendMessage}
-            disabled={!inputValue.trim() || isLoading}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-md"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
+        )}
+
+        {/* Main Chat Interface */}
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1 max-w-4xl mx-auto p-4 w-full flex flex-col">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Welcome to SoraChain AI Assistant
+              </h2>
+              <p className="text-indigo-600">
+                Ask me anything about the SoraChain AI platform
+              </p>
+            </div>
+
+            {/* Chat Messages - Fixed height with proper scrolling */}
+            <Card className="flex-1 bg-white/70 backdrop-blur-md border-gray-200 mb-4 shadow-lg overflow-hidden">
+              <div className="h-full flex flex-col">
+                <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+                  {messages.length === 0 && (
+                    <div className="text-center text-gray-500 mt-8">
+                      <img src={soraLogo} className="h-12 w-12 mx-auto mb-4" />
+                      <p>Start a conversation about SoraChain AI!</p>
+                      <p className="text-xs mt-2">Or click on a FAQ question from the sidebar</p>
+                    </div>
+                  )}
+                  <div className="space-y-4 min-h-0">
+                    {messages.map((message) => (
+                      <div
+                        key={message.id}
+                        className={`flex ${
+                          message.role === "user" ? "justify-end" : "justify-start"
+                        }`}
+                      >
+                        <div
+                          className={`max-w-[80%] rounded-lg p-3 shadow-sm ${
+                            message.role === "user"
+                              ? "bg-indigo-600 text-white"
+                              : "bg-white text-gray-800 border border-gray-200"
+                          }`}
+                        >
+                          <div className="flex items-start space-x-2">
+                            {message.role === "assistant" && (
+                              <Bot className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
+                            )}
+                            {message.role === "user" && (
+                              <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <div className="whitespace-pre-wrap break-words">
+                                <AIResponseRenderer aiResponse={message.content} />
+                              </div>
+                              <p
+                                className={`text-xs mt-1 ${
+                                  message.role === "user"
+                                    ? "text-indigo-100"
+                                    : "text-gray-500"
+                                }`}
+                              >
+                                {message.timestamp.toLocaleTimeString()}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {isLoading && (
+                      <div className="flex justify-start">
+                        <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[80%] shadow-sm">
+                          <div className="flex items-center space-x-2">
+                            <Bot className="h-5 w-5 text-indigo-600" />
+                            <div className="flex space-x-1">
+                              <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+                              <div
+                                className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
+                                style={{ animationDelay: "0.1s" }}
+                              ></div>
+                              <div
+                                className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
+                                style={{ animationDelay: "0.2s" }}
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
+            </Card>
+
+            {/* Input Area */}
+            <div className="flex space-x-2">
+              <Input
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask about SoraChain AI..."
+                className="flex-1 bg-white/70 backdrop-blur-md border-gray-300 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500"
+                disabled={isLoading}
+              />
+              <Button
+                onClick={() => sendMessage()}
+                disabled={!inputValue.trim() || isLoading}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-md"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
