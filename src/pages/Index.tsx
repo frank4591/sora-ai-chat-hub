@@ -265,7 +265,7 @@ const Index = () => {
 
         {/* Main Chat Interface */}
         <div className="flex-1 flex flex-col">
-          <div className="flex-1 max-w-4xl mx-auto p-4 w-full flex flex-col">
+          <div className="flex-1 max-w-6xl mx-auto p-4 w-full flex flex-col">
             <div className="text-center mb-6">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 Welcome to SoraChain AI Assistant
@@ -286,7 +286,7 @@ const Index = () => {
                       <p className="text-xs mt-2">Or click on a FAQ question from the sidebar</p>
                     </div>
                   )}
-                  <div className="space-y-4 min-h-0">
+                  <div className="space-y-4">
                     {messages.map((message) => (
                       <div
                         key={message.id}
@@ -295,7 +295,7 @@ const Index = () => {
                         }`}
                       >
                         <div
-                          className={`max-w-[80%] rounded-lg p-3 shadow-sm ${
+                          className={`max-w-[85%] rounded-lg p-3 shadow-sm ${
                             message.role === "user"
                               ? "bg-indigo-600 text-white"
                               : "bg-white text-gray-800 border border-gray-200"
@@ -309,7 +309,7 @@ const Index = () => {
                               <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
                             )}
                             <div className="flex-1 min-w-0">
-                              <div className="whitespace-pre-wrap break-words">
+                              <div className="whitespace-pre-wrap break-words overflow-hidden">
                                 <AIResponseRenderer aiResponse={message.content} />
                               </div>
                               <p
@@ -328,7 +328,7 @@ const Index = () => {
                     ))}
                     {isLoading && (
                       <div className="flex justify-start">
-                        <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[80%] shadow-sm">
+                        <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[85%] shadow-sm">
                           <div className="flex items-center space-x-2">
                             <Bot className="h-5 w-5 text-indigo-600" />
                             <div className="flex space-x-1">
