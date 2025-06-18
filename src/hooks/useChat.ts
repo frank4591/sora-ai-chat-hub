@@ -47,7 +47,7 @@ export const useChat = () => {
         {
           role: "system",
           content:
-            "You are an AI assistant that helps people find information about Sorachain Ai platform, Give them information related to Sorachain.Give proper spacing,  use markdown format in response.Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines ",
+            "You are an AI assistant that helps people find information about Sorachain Ai platform, Give them information related to Sorachain.Give proper spacing extra lines ,  use markdown format in response.Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines ",
         },
         ...messages.slice(-10).map((msg) => ({
           // Last 10 messages for context
@@ -76,7 +76,7 @@ export const useChat = () => {
               },
               inScope: true,
               roleInformation:
-                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Use markdown format in response.Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines and remove reference of documents.when giving final content response",
+                "You are an SoraChain AI platform's assistant that helps people find information about the project and help to find more information to them.Give extra space and line for better visibility. Use markdown format in response.Do not use plain text or tabs for formatting — format as Markdown table ,headings, bold wherever required. For table create proper tabular lines and remove reference of documents.when giving final content response",
             },
           },
         ],

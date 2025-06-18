@@ -1,4 +1,3 @@
-
 import { useRef, useEffect } from "react";
 import { Bot, User } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,16 +27,23 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
   }, [messages]);
 
   return (
-    <Card className="flex-1 bg-white/70 backdrop-blur-md border-gray-200 mb-4 shadow-lg overflow-hidden">
+    <Card className="flex-1 bg-white/70 backdrop-blur-md border-gray-200 mb-4 shadow-lg overflow-auto">
       <div className="h-full flex flex-col">
-        <ScrollArea className="flex-1 p-4 h-[calc(100vh-200px)]" ref={scrollAreaRef}>
+        <ScrollArea
+          className="flex-1 p-4 h-[calc(100vh-200px)]"
+          ref={scrollAreaRef}
+        >
           {messages.length === 0 && (
             <div className="text-center text-gray-500 mt-8">
               <img src={soraLogo} className="h-12 w-12 mx-auto mb-4" />
               <p>Start a conversation about SoraChain AI!</p>
-              <p className="text-xs mt-2">Or click on a FAQ question from the sidebar</p>
+              <p className="text-xs mt-2">
+                Or click on a FAQ question from the sidebar
+              </p>
             </div>
           )}
+          <div className="h-[calc(100vh-200px)] overflow-y-auto">
+
           <div className="space-y-4">
             {messages.map((message) => (
               <div
@@ -47,9 +53,9 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
                 }`}
               >
                 <div
-                  className={`max-w-[85%] rounded-lg p-3 shadow-sm ${
+                  className={`max-w-[100%] rounded-lg p-3 shadow-sm ${
                     message.role === "user"
-                      ? "bg-indigo-600 text-white"
+                      ? "bg-white text-white"
                       : "bg-white text-gray-800 border border-gray-200"
                   }`}
                 >
@@ -58,7 +64,7 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
                       <Bot className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
                     )}
                     {message.role === "user" && (
-                      <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
+                      <User className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="prose prose-sm max-w-none max-h-96 overflow-auto">
@@ -80,7 +86,7 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[85%] shadow-sm">
+                <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[100%] shadow-sm">
                   <div className="flex items-center space-x-2">
                     <Bot className="h-5 w-5 text-indigo-600" />
                     <div className="flex space-x-1">
@@ -98,6 +104,7 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
                 </div>
               </div>
             )}
+          </div>
           </div>
         </ScrollArea>
       </div>
