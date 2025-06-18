@@ -42,69 +42,69 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
               </p>
             </div>
           )}
-          <div className="h-[calc(100vh-200px)] overflow-y-auto">
-
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
+          <div className="h-[calc(50vh-200px)] overflow-y-auto">
+            <div className="space-y-4">
+              {messages.map((message) => (
                 <div
-                  className={`max-w-[100%] rounded-lg p-3 shadow-sm ${
-                    message.role === "user"
-                      ? "bg-white text-white"
-                      : "bg-white text-gray-800 border border-gray-200"
+                  key={message.id}
+                  className={`flex ${
+                    message.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <div className="flex items-start space-x-2">
-                    {message.role === "assistant" && (
-                      <Bot className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
-                    )}
-                    {message.role === "user" && (
-                      <User className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="prose prose-sm max-w-none max-h-96 overflow-auto">
+                  <div
+                    className={`max-w-[100%] rounded-lg p-3 shadow-sm ${
+                      message.role === "user"
+                        ? "bg-white text-white"
+                        : "bg-white text-gray-800 border border-gray-200"
+                    }`}
+                  >
+                    <div className="flex items-start space-x-2">
+                      {message.role === "assistant" && (
+                        <Bot className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
+                      )}
+                      {message.role === "user" && (
+                        <User className="h-5 w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
+                      )}
+                      <div className="flex-1 min-w-0">
                         <AIResponseRenderer aiResponse={message.content} />
+                        {/* <div className="prose prose-sm max-w-none max-h-96 overflow-auto">
+                        
+                      </div> */}
+                        <p
+                          className={`text-xs mt-1 ${
+                            message.role === "user"
+                              ? "text-indigo-100"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {message.timestamp.toLocaleTimeString()}
+                        </p>
                       </div>
-                      <p
-                        className={`text-xs mt-1 ${
-                          message.role === "user"
-                            ? "text-indigo-100"
-                            : "text-gray-500"
-                        }`}
-                      >
-                        {message.timestamp.toLocaleTimeString()}
-                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[100%] shadow-sm">
-                  <div className="flex items-center space-x-2">
-                    <Bot className="h-5 w-5 text-indigo-600" />
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
-                      <div
-                        className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
-                        style={{ animationDelay: "0.1s" }}
-                      ></div>
-                      <div
-                        className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
-                        style={{ animationDelay: "0.2s" }}
-                      ></div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-white text-gray-800 border border-gray-200 rounded-lg p-3 max-w-[100%] shadow-sm">
+                    <div className="flex items-center space-x-2">
+                      <Bot className="h-5 w-5 text-indigo-600" />
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+                        <div
+                          className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
+                          style={{ animationDelay: "0.1s" }}
+                        ></div>
+                        <div
+                          className="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"
+                          style={{ animationDelay: "0.2s" }}
+                        ></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
           </div>
         </ScrollArea>
       </div>
