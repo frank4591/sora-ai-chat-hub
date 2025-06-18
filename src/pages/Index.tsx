@@ -309,7 +309,7 @@ const Index = () => {
                               <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
                             )}
                             <div className="flex-1 min-w-0">
-                              <div className="whitespace-pre-wrap break-words overflow-hidden">
+                              <div className="prose prose-sm max-w-none overflow-auto">
                                 <AIResponseRenderer aiResponse={message.content} />
                               </div>
                               <p
