@@ -30,7 +30,7 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
   return (
     <Card className="flex-1 bg-white/70 backdrop-blur-md border-gray-200 mb-4 shadow-lg overflow-hidden">
       <div className="h-full flex flex-col">
-        <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+        <ScrollArea className="flex-1 p-4 h-[calc(100vh-200px)]" ref={scrollAreaRef}>
           {messages.length === 0 && (
             <div className="text-center text-gray-500 mt-8">
               <img src={soraLogo} className="h-12 w-12 mx-auto mb-4" />
@@ -61,7 +61,7 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
                       <User className="h-5 w-5 mt-0.5 text-white flex-shrink-0" />
                     )}
                     <div className="flex-1 min-w-0">
-                      <div className="prose prose-sm max-w-none overflow-auto">
+                      <div className="prose prose-sm max-w-none max-h-96 overflow-auto">
                         <AIResponseRenderer aiResponse={message.content} />
                       </div>
                       <p
