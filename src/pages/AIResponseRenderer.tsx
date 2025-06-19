@@ -59,7 +59,7 @@ const AIResponseRenderer: React.FC<AIResponseRendererProps> = ({ aiResponse }) =
         }}
       >
         {aiResponse}
-      </li>
+      </ReactMarkdown>
     </div>
   );
 };
