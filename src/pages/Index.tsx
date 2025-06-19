@@ -43,7 +43,7 @@ const Index = () => {
             {/* Chat Messages - Fixed height container */}
             <div className="flex-1 min-h-0 mb-4">
               <ChatMessages messages={messages} isLoading={isLoading} />
-            </div>
+            </div>            
 
             {/* Input Area - Fixed at bottom */}
             <div className="flex-shrink-0">
@@ -54,7 +54,14 @@ const Index = () => {
                 isLoading={isLoading}
               />
             </div>
+            <div className="flex-shrink-0">
+              {/* <br /> */}
+               <p className="text-indigo-600 text-xs s:text-base"><br />
+    <h6 className="text-indigo-600 text-xs s:text-base"> ⚠️ Alpha Notice: This AI assistant is an early version built on our Notion docs. Responses may be incomplete — 
+    please refer to our <a href="https://notion.sorachain.ai" className="text-indigo-800 hover:underline" target="_blank" rel="noopener noreferrer"> Notion(click here) </a> for the most accurate and up-to-date information. </h6> </p>
+            </div>
           </div>
+          
         </div>
       </div>
     </div>
