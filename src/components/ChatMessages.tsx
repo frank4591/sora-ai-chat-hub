@@ -51,7 +51,7 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
               }`}
             >
               <div
-                className={`max-w-[95%] sm:max-w-[85%] md:max-w-[75%] rounded-lg p-2 sm:p-3 shadow-sm ${
+                className={`max-w-[95%] sm:max-w-[90%] md:max-w-[95%] rounded-lg p-2 sm:p-3 shadow-sm ${
                   message.role === "user"
                     ? "bg-white text-gray-800"
                     : "bg-white text-gray-800 border border-gray-200"
@@ -65,8 +65,9 @@ const ChatMessages = ({ messages, isLoading }: ChatMessagesProps) => {
                     <User className="h-4 w-4 sm:h-5 sm:w-5 mt-0.5 text-indigo-600 flex-shrink-0" />
                   )}
                   <div className="flex-1 min-w-0">
+                    <AIResponseRenderer aiResponse={message.content} />
                     <div className="max-h-64 sm:max-h-80 overflow-y-auto">
-                      <AIResponseRenderer aiResponse={message.content} />
+                      
                     </div>
                     <p className="text-xs mt-1 text-gray-500">
                       {message.timestamp.toLocaleTimeString()}

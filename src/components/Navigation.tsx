@@ -22,7 +22,7 @@ const Navigation = ({ onMenuClick }: NavigationProps) => {
               <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
             <img src={soraLogo} className="h-4 w-4 sm:h-5 sm:w-5" />
-            <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">
+            <h1 className="text-mg sm:text-m font-bold text-gray-900 truncate">
               SoraChain AI Assistant
             </h1>
           </div>
