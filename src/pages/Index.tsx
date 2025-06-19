@@ -29,9 +29,9 @@ const Index = () => {
         />
 
         {/* Main Chat Interface */}
-        <div className="flex-1 flex flex-col min-w-0">
-          <div className="flex-1 max-w-6xl mx-auto p-2 sm:p-4 w-full flex flex-col">
-            <div className="text-center mb-4 sm:mb-6 px-2">
+        <div className="flex-1 flex flex-col min-w-0 h-full">
+          <div className="flex-1 max-w-6xl mx-auto p-2 sm:p-4 w-full flex flex-col h-full">
+            <div className="text-center mb-4 sm:mb-6 px-2 flex-shrink-0">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                 Welcome to SoraChain AI Assistant
               </h2>
@@ -40,16 +40,20 @@ const Index = () => {
               </p>
             </div>
 
-            {/* Chat Messages */}
-            <ChatMessages messages={messages} isLoading={isLoading} />
+            {/* Chat Messages - Fixed height container */}
+            <div className="flex-1 min-h-0 mb-4">
+              <ChatMessages messages={messages} isLoading={isLoading} />
+            </div>
 
-            {/* Input Area */}
-            <MessageInput
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              onSendMessage={() => sendMessage()}
-              isLoading={isLoading}
-            />
+            {/* Input Area - Fixed at bottom */}
+            <div className="flex-shrink-0">
+              <MessageInput
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                onSendMessage={() => sendMessage()}
+                isLoading={isLoading}
+              />
+            </div>
           </div>
         </div>
       </div>
