@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -34,31 +35,31 @@ const FAQSidebar = ({
       <div
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 fixed md:relative z-30 w-80 h-full transition-transform duration-300 ease-in-out`}
+        } md:translate-x-0 fixed md:relative z-30 w-72 sm:w-80 h-full transition-transform duration-300 ease-in-out`}
       >
         <div className="h-full bg-white/90 backdrop-blur-md border-r border-gray-200 shadow-lg">
-          <div className="p-4 border-b border-gray-200">
+          <div className="p-3 sm:p-4 border-b border-gray-200">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-base sm:text-lg font-semibold text-gray-900">
                 Frequently Asked Questions
               </h2>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setSidebarOpen(false)}
-                className="md:hidden"
+                className="md:hidden h-8 w-8"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </Button>
             </div>
           </div>
-          <ScrollArea className="h-[calc(100%-5rem)] p-4">
+          <ScrollArea className="h-[calc(100%-4rem)] sm:h-[calc(100%-5rem)] p-3 sm:p-4">
             <div className="space-y-2">
               {faqQuestions.map((question, index) => (
                 <button
                   key={index}
                   onClick={() => onFAQClick(question)}
-                  className="w-full text-left p-3 rounded-lg bg-gray-50 hover:bg-indigo-50 hover:border-indigo-200 border border-transparent transition-colors duration-200 text-sm text-gray-700 hover:text-indigo-700"
+                  className="w-full text-left p-2 sm:p-3 rounded-lg bg-gray-50 hover:bg-indigo-50 hover:border-indigo-200 border border-transparent transition-colors duration-200 text-xs sm:text-sm text-gray-700 hover:text-indigo-700 leading-relaxed"
                 >
                   {question}
                 </button>

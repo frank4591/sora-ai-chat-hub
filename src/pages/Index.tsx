@@ -16,11 +16,11 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 overflow-hidden">
       {/* Navigation Header */}
       <Navigation onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
 
-      <div className="flex h-[calc(100vh-4rem)]">
+      <div className="flex h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)]">
         {/* FAQ Sidebar */}
         <FAQSidebar 
           sidebarOpen={sidebarOpen}
@@ -29,13 +29,13 @@ const Index = () => {
         />
 
         {/* Main Chat Interface */}
-        <div className="flex-1 flex flex-col">
-          <div className="flex-1 max-w-6xl mx-auto p-4 w-full flex flex-col">
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex-1 max-w-6xl mx-auto p-2 sm:p-4 w-full flex flex-col">
+            <div className="text-center mb-4 sm:mb-6 px-2">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                 Welcome to SoraChain AI Assistant
               </h2>
-              <p className="text-indigo-600">
+              <p className="text-indigo-600 text-sm sm:text-base">
                 Ask me anything about the SoraChain AI platform
               </p>
             </div>
