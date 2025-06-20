@@ -6,16 +6,18 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const faqQuestions = [
   "What is SoraChain AI?",
-  "What is SoraChain AI trying to build?",
-  "What is the vision of SoraChain AI?",
-  "What are the Go To Market(GTM) Strategy of SoraChain AI?",
+  "What is the vision?",
+  "What is your unique value proposition?",
+  "What are the top use cases?",
+  "What is the GTM Strategy?",
   "What is the Revenue Model?",
-  "Why Sorachain AI Excels at what they are building?",
-  "Who are the core Competitors?",
-  "What is your Competitive Advantage?",
-  "What is the Difference between On device Training and SoraChain AI's Training?",
+  "Who are the core competitors?",
+  "What is your competitive advantage?",
+  "What is federated learning?",
+  "Difference between On-Device Training and Federated Training?",
   "How much are you raising and at what valuation?",
   "What is your current roadmap?",
+  "How is it different from Flower like FL frameworks?"
 ];
 
 interface FAQSidebarProps {
